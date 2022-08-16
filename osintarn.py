@@ -54,7 +54,7 @@ def _crawl():
 		response = requests.get(url)
 		emails = re.findall(r"[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+", response.text)
 		links = get_links(url)
-		print(len(links))
+		print("[+] Number of links to crawl:", len(links))
 		for link in links:
 			try:
 				if verbose: print("[+] parsing:", link)
