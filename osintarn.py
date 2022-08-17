@@ -7,8 +7,8 @@ import urllib.parse
 from bs4 import BeautifulSoup
 
 parser = argparse.ArgumentParser(description='osintarn')
-parser.add_argument('--domain','-d',required=True,help='domain')
-parser.add_argument('--verbose','-v',type=bool,default=False,help='verbose')
+parser.add_argument('-d','--domain',required=True,help='domain')
+parser.add_argument('-v','--verbose',type=bool,default=False,help='verbose')
 args = parser.parse_args()
 
 domain = args.domain
