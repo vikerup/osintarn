@@ -46,16 +46,19 @@ def _emailcrawlr():
 	return result
 
 def _crawl():
+	emails = []
+	urls = ['https://{}'.format(domain)]
+	urls += ['https://keyserver.ubuntu.com/pks/lookup?search={}&fingerprint=on&op=index'.format(domain)]
 	#urls = ['http://search.yahoo.com/search?p=%22%40{}%22&n=100&start=1".format(domain)']
 	#urls = ['https://www.bing.com/search?q="%40{}"'.format(domain)]
-	urls = ['https://{}'.format(domain)]
 	#urls = ['https://www.google.com/search?num=100&start=0&hl=en&q=%22%40{}%22'.format(domain)]
 	for url in urls:
 		response = requests.get(url)
-		emails = re.findall(r"[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+", response.text)
+		emails.extend(re.findall(r"[A-Za-z0-9\.\-+_]+@[A-Za-z0-9\.\-+_]+\.[A-Za-z]+", response.text))
 		links = get_links(url)
 		print("[+] Number of links to crawl:", len(links))
 		for link in links:
+			if "keyserver" in link: break #skip crawling of keyserver
 			try:
 				if verbose: print("[+] parsing:", link)
 				response = requests.get(link)
